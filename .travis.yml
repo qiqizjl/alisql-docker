@@ -1,0 +1,22 @@
+language: bash
+services: docker
+
+env:
+  - VERSION=5.6.32-20161015
+
+
+install:
+  - git clone https://github.com/docker-library/official-images.git ~/official-images
+
+before_script:
+  - env | sort
+  - cd "$VERSION"
+  - image="qiqizjl/alisql:${VERSION}"
+  - image="${image//'/'/-}"
+
+script:
+  - docker build -t "$image" "${VARIANT:-.}"
+  - ~/official-images/test/run.sh "$image"
+
+after_script:
+  - docker images
