@@ -26,10 +26,6 @@ RUN mkdir /docker-entrypoint-initdb.d
 # Data::Dumper
 RUN apt-get update && apt-get install -y git cmake make  g++ bison libncurses5-dev && rm -rf /var/lib/apt/lists/*
 
-ENV MYSQL_MAJOR 5.6
-ENV MYSQL_VERSION 5.6.31-1debian8
-
-RUN echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-${MYSQL_MAJOR}" > /etc/apt/sources.list.d/mysql.list
 
 # the "/var/lib/mysql" stuff here is because the mysql-server postinst doesn't have an explicit way to disable the mysql_install_db codepath besides having a database already "configured" (ie, stuff in /var/lib/mysql/mysql)
 # also, we set debconf keys to make APT a little quieter
