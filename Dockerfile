@@ -24,7 +24,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 # File::Copy
 # Sys::Hostname
 # Data::Dumper
-RUN apt-get update && apt-get install -yGit cmake make  g++ bison libncurses5-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git cmake make  g++ bison libncurses5-dev && rm -rf /var/lib/apt/lists/*
 
 ENV MYSQL_MAJOR 5.6
 ENV MYSQL_VERSION 5.6.31-1debian8
