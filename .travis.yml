@@ -9,10 +9,7 @@ install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images
 
 before_script:
-  - env | sort
-  - cd "$VERSION"
   - image="qiqizjl/alisql:${VERSION}"
-  - image="${image//'/'/-}"
 
 script:
   - docker build -t "$image" .
