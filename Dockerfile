@@ -24,21 +24,17 @@ RUN mkdir /docker-entrypoint-initdb.d
 # File::Copy
 # Sys::Hostname
 # Data::Dumper
-RUN apt-get update && apt-get install -y git cmake make  g++ bison libncurses5-dev && rm -rf /var/lib/apt/lists/*
+
 
 
 # the "/var/lib/mysql" stuff here is because the mysql-server postinst doesn't have an explicit way to disable the mysql_install_db codepath besides having a database already "configured" (ie, stuff in /var/lib/mysql/mysql)
 # also, we set debconf keys to make APT a little quieter
-RUN  cd / \
-    && git clone https://github.com/alibaba/AliSQL.git \
-    && cd AliSQL \
-    && cmake /AliSQL \
-    -DMYSQL_DATADIR=/var/lib/mysql \
-    -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
-    -DSYSCONFDIR=/etc/mysql \
-    && make && make install \
-    && echo "export PATH=$PATH:/usr/local/mysql/bin" >> /root/.bash_profile \
-    && rm -rf /AliSQL
+
+ADD http://img.zhisheji.com/mysql-5.6.32-linux-x86_64.tar.gz /usr/local/mysql/
+RUN rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
+	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
+	&& chmod 777 /var/run/mysqld
+    && echo "export PATH=$PATH:/usr/local/mysql/bin" >> /root/.bash_profile \git
 
 VOLUME /var/lib/mysql
 
